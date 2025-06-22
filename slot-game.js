@@ -1,6 +1,63 @@
+let tumblerValues = ['Gem','Gem','Gem','Gem','Gem'];
+let balance = 100000000;
+let bet = 0;
+
+console.log(balance);
+
+function displayTumblers() {
+    for (let i = 0; i < 5; i++) {
+        let tumbler = document.querySelector(`#tumbler-${i}`);
+        tumbler.textContent = tumblerValues[i];
+    }
+    return;
+};
+
+displayTumblers();
+
+function displayBet(bet) {
+    let currentBet = document.querySelector('.bet-adjustment-panel p');
+    currentBet.textContent = ('00' + bet).slice(-3);
+    return;
+}
+
+function displayScore(balance) {
+    let currentBalance = document.querySelector('.point-read-out p');
+    currentBalance.textContent = ('000000000' + balance).slice(-9);
+};
+
+displayScore(balance);
+
+function incrementBet(amount) {
+    newBet = bet + amount;
+    if (newBet >= 0 & newBet < 1000) {
+        bet += amount;
+    }
+    console.log(bet);
+    return;
+}
+
+function incrementBalance(amount) {
+    balance += amount;
+    displayScore(balance);
+};
+
+function decrementBalance(amount) {
+    balance -= amount;
+    displayScore(balance);
+};
+
+const incrementButtons = document.querySelectorAll('.bet-adjustment-buttons button');
+incrementButtons.forEach((button) => {
+    console.log(button.id);
+    button.addEventListener('click', () => {
+        incrementBet(Number(button.id));
+        displayBet(bet);
+    });
+});
+
 function getRandomValInRange(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
-}
+};
 
 function getTumblerSymbol(item, index, arr) {
     let randomVal = getRandomValInRange(1,15);
@@ -54,14 +111,13 @@ function getTumblerSymbol(item, index, arr) {
     }
     arr[index] = item;
     console.log(`item ${index} assigned ${item}`);
-}
+};
 
-let tumblerValues = ['Gem','Gem','Gem','Gem','Gem'];
 function rollTumblers() {
     tumblerValues.forEach(getTumblerSymbol);
     console.log(tumblerValues);
     return;
-}
+};
 
 function displayTumblers() {
     for (let i = 0; i < 5; i++) {
@@ -69,11 +125,15 @@ function displayTumblers() {
         tumbler.textContent = tumblerValues[i];
     }
     return;
-}
+};
 
 let playButton = document.querySelector('.play-button');
 playButton.addEventListener('click', () => {
+    decrementBalance(bet);
     rollTumblers();
     displayTumblers();
+    // incrementBalance();
     return;
 });
+
+
