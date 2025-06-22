@@ -1,32 +1,125 @@
-let tumblerValues = ['Gem','Gem','Gem','Gem','Gem'];
+/* Class Declarations */
+class Item {
+    constructor() {
+        this.itemID = 0;
+        this.category = 0;
+        this.itemName = 'Gem';
+    };
+
+    assignNewItem(itemID) {
+        let name = '';
+        let category = 0;
+        switch(itemID) {
+            case 0:
+                name = 'Gem';
+                category = 0;
+                break;
+            case 1:
+                name = '7';
+                category = 1;
+                break;
+            case 2:
+                name = '3';
+                category = 1;
+                break;
+            case 3:
+                name = '$';
+                category = 2;
+                break;
+            case 4:
+                name = '¥';
+                category = 2;
+                break;
+            case 5:
+                name = '€';
+                category = 2;
+                break;
+            case 6:
+                name = 'Spade';
+                category = 3;
+                break;
+            case 7:
+                name = 'Diamond';
+                category = 3;
+                break;
+            case 8:
+                name = 'Club';
+                category = 3;
+                break;
+            case 9:
+                name = 'Heart';
+                category = 3;
+                break;
+            case 10:
+                name = 'Cherry';
+                category = 4;
+                break;
+            case 11:
+                name = 'Watermelon';
+                category = 4;
+                break;
+            case 12:
+                name = 'Lemon';
+                category = 4;
+                break;
+            case 13:
+                name = 'Orange';
+                category = 4;
+                break;
+            case 14:
+                name = 'Blackberry';
+                category = 4;
+                break;
+            default:
+                name = 'null';
+                category = -1;
+                break;
+        }
+        this.itemID = itemID;
+        this.itemName = name;
+        this.category = category;
+    };
+
+    getItemID() {
+        return this.itemID;
+    };
+
+    getItemCategory() {
+        return this.category;
+    };
+
+    getItemName() {
+        return this.itemName;
+    };
+};
+
+/* Variable Declarations */
+let tumblerValues = [new Item(), new Item(), new Item(), new Item(), new Item()]; // init to all Gems
 let balance = 100000000;
 let bet = 0;
 
-console.log(balance);
-
+/* DOM Manipulation functions */
 function displayTumblers() {
     for (let i = 0; i < 5; i++) {
         let tumbler = document.querySelector(`#tumbler-${i}`);
-        tumbler.textContent = tumblerValues[i];
+        tumbler.textContent = tumblerValues[i].getItemName();
     }
     return;
 };
-
-displayTumblers();
 
 function displayBet(bet) {
     let currentBet = document.querySelector('.bet-adjustment-panel p');
     currentBet.textContent = ('00' + bet).slice(-3);
     return;
-}
+};
 
 function displayScore(balance) {
     let currentBalance = document.querySelector('.point-read-out p');
     currentBalance.textContent = ('000000000' + balance).slice(-9);
 };
 
-displayScore(balance);
 
+/* Gameplay Support Functions */
 function incrementBet(amount) {
     newBet = bet + amount;
     if (newBet >= 0 & newBet < 1000) {
@@ -34,7 +127,7 @@ function incrementBet(amount) {
     }
     console.log(bet);
     return;
-}
+};
 
 function incrementBalance(amount) {
     balance += amount;
@@ -46,94 +139,40 @@ function decrementBalance(amount) {
     displayScore(balance);
 };
 
-const incrementButtons = document.querySelectorAll('.bet-adjustment-buttons button');
-incrementButtons.forEach((button) => {
-    console.log(button.id);
-    button.addEventListener('click', () => {
-        incrementBet(Number(button.id));
-        displayBet(bet);
-    });
-});
-
 function getRandomValInRange(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 };
 
 function getTumblerSymbol(item, index, arr) {
-    let randomVal = getRandomValInRange(1,15);
-
-    switch(randomVal) {
-        case 1:
-            item = 'Gem';
-            break;
-        case 2:
-            item = '7';
-            break;
-        case 3:
-            item = '3';
-            break;
-        case 4:
-            item = '$';
-            break;
-        case 5:
-            item = '¥‎';
-            break;
-        case 6:
-            item = '€‎';
-            break;
-        case 7:
-            item = 'Spade';
-            break;
-        case 8:
-            item = 'Diamond';
-            break;
-        case 9:
-            item = 'Club';
-            break;
-        case 10:
-            item = 'Heart';
-            break;
-        case 11:
-            item = 'Cherry';
-            break;
-        case 12:
-            item = 'Watermelon';
-            break;
-        case 13:
-            item = 'Lemon';
-            break;
-        case 14:
-            item = 'Orange';
-            break;
-        case 15:
-            item = 'Blackberry';
-            break;
-    }
-    arr[index] = item;
-    console.log(`item ${index} assigned ${item}`);
+    let randomID = getRandomValInRange(0,14);
+    arr[index].assignNewItem(randomID);
+    console.log(`item ${index} assigned ${item.getItemName()}`);
 };
 
+/* Core Gameplay Functions */
 function rollTumblers() {
     tumblerValues.forEach(getTumblerSymbol);
     console.log(tumblerValues);
     return;
 };
 
-function displayTumblers() {
-    for (let i = 0; i < 5; i++) {
-        let tumbler = document.querySelector(`#tumbler-${i}`);
-        tumbler.textContent = tumblerValues[i];
-    }
-    return;
-};
+/* Event Listener Bindings */
+const incrementButtons = document.querySelectorAll('.bet-adjustment-buttons button');
+incrementButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        incrementBet(Number(button.id));
+        displayBet(bet);
+    });
+});
 
 let playButton = document.querySelector('.play-button');
 playButton.addEventListener('click', () => {
     decrementBalance(bet);
     rollTumblers();
     displayTumblers();
-    // incrementBalance();
     return;
 });
 
-
+/* Page Initialization */
+displayTumblers();
+displayScore(balance);
