@@ -209,15 +209,108 @@ function countItems() {
     return [itemIDOfMax, maxCount];
 };
 
+function getIDMultiplier(ID, type) {
+    if (type == 'item') {
+        switch(ID) {
+            case 14:
+                return 1000;
+            case 13:
+            case 12:
+                return 250;
+            case 11:
+            case 10:
+            case 9:
+                return 50;
+            case 8:
+            case 7:
+            case 6:
+            case 5:
+                return 20;
+            case 4:
+            case 3:
+            case 2:
+            case 1:
+            case 0:
+                return 5;
+        };
+    }
+    else {
+        switch(ID) {
+            case 14:
+                return 25;
+            case 13:
+            case 12:
+                return 10;
+            case 11:
+            case 10:
+            case 9:
+                return 5;
+            case 8:
+            case 7:
+            case 6:
+            case 5:
+                return 2;
+            case 4:
+            case 3:
+            case 2:
+            case 1:
+            case 0:
+                return 1; 
+        };
+    };
+};
+
+function getCountMultiplier(count, type) {
+    if (type == 'item') {
+        switch(count) {
+            case 5:
+                return 25;
+            case 4:
+                return 10;
+            case 3:
+                return 5;
+            default:
+                return 0;
+        };
+    }
+    else {
+        switch (count) {
+            case 5:
+                return 5;
+            case 4:
+                return 2;
+            case 3:
+                return 1;
+            default:
+                return 0;
+        };
+    };
+}
+
 /* Core Gameplay Functions */
 function rollTumblers() {
     tumblerValues.forEach(getTumblerItem);
     return;
 };
 
-function scoreTumblers() {
+function scoreTumblers(bet) {
+    let ID = 0;
+    let count = 0;
+    let type = 'null';
     let [maxCategoryID, maxCategoryCount] = countCategories();
     let [maxItemID, maxItemCount] = countItems();
+    if (maxItemCount >= maxCategoryCount) {
+        ID = maxItemID;
+        count = maxItemCount;
+        type = 'item';
+    }
+    else {
+        ID = maxCategoryID;
+        count = maxCategoryCount;
+        type = 'category';
+    };
+    console.log(`Score Tumble Debug:\nID:${ID} count:${count} type:${type}`);
+    return bet * getCountMultiplier(count, type) * getIDMultiplier(ID, type);
 };
 
 /* Event Listener Bindings */
@@ -234,7 +327,9 @@ playButton.addEventListener('click', () => {
     decrementBalance(bet);
     rollTumblers();
     displayTumblers();
-    scoreTumblers();
+    let payout = scoreTumblers(bet);
+    console.log(`Last spin's payout: ${payout}`);
+    incrementBalance(payout);
     return;
 });
 
