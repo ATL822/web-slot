@@ -68,6 +68,7 @@
     height: 60%;
     width: 95%;
     align-self: center;
+    align-items: center;
 }
 
 .point-read-out {
