@@ -44,14 +44,16 @@
 }
 
 .tumbler-bar {
-    border: 2px solid;
     display: flex;
     justify-content: center;
-    width: 700px;
-    height: 220px;
+    width: 360px;
+    height: 72px;
+    gap: 2px;
     align-self: center;
     align-items: center;
-    gap: 64px;
+    background-image: url(./assets/TumblerBar.png);
+    image-rendering: pixelated;
+    scale: 2;
 }
 
 .tumbler {
@@ -61,7 +63,6 @@
     align-items: center;
     justify-content: center;
     background-image: url(./assets/TumblerBack.png);
-    scale: 2;
     image-rendering: pixelated;
 }
 
