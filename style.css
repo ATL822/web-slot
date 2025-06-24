@@ -86,9 +86,16 @@
 
 .point-read-out {
     border: 2px solid;
-    text-align: center;
     height: 30%;
     width: 95%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.balance-display .payout-display{
+    text-align: right;
 }
 
 .bet-interface-interactables {

@@ -120,10 +120,26 @@ function displayBet(bet) {
 };
 
 function displayScore(balance) {
-    let currentBalance = document.querySelector('.point-read-out p');
+    let currentBalance = document.querySelector('.balance-display');
     currentBalance.textContent = ('000000000' + balance).slice(-9);
+    return;
 };
 
+function displayPayout(payout) {
+    let payoutDisplay = document.querySelector('.payout-display')
+    let displayNum = payout - bet;
+    if (displayNum < 0) {
+        sign = '-';
+    }
+    else if(displayNum > 0) {
+        sign = '+'
+    } 
+    else {
+        sign = ' '
+    };
+    payoutDisplay.textContent = sign + ('000000000' + Math.abs(payout - bet)).slice(-9);
+    return;
+}
 
 /* Gameplay Support Functions */
 function incrementBet(amount) {
@@ -331,6 +347,7 @@ playButton.addEventListener('click', () => {
     displayTumblers();
     let payout = scoreTumblers(bet);
     console.log(`Last spin's payout: ${payout}`);
+    displayPayout(payout);
     incrementBalance(payout);
     return;
 });
