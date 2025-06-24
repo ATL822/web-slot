@@ -15,23 +15,23 @@ class Item {
                 category = 4;
                 break;
             case 13:
-                name = '7';
+                name = 'Seven';
                 category = 3;
                 break;
             case 12:
-                name = '3';
+                name = 'Three';
                 category = 3;
                 break;
             case 11:
-                name = '$';
+                name = 'Dollar';
                 category = 2;
                 break;
             case 10:
-                name = '¥';
+                name = 'Yen';
                 category = 2;
                 break;
             case 9:
-                name = '€';
+                name = 'Euro';
                 category = 2;
                 break;
             case 8:
@@ -106,7 +106,9 @@ let bet = 25;
 function displayTumblers() {
     for (let i = 0; i < 5; i++) {
         let tumbler = document.querySelector(`#tumbler-${i}`);
-        tumbler.textContent = tumblerValues[i].getItemName();
+        let imagePath = `url('./assets/${tumblerValues[i].getItemName()}.png')`
+        tumbler.style.backgroundImage = imagePath;
+        tumbler.textContent = '';
     }
     return;
 };
