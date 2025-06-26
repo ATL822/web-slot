@@ -95,8 +95,9 @@
     align-items: center;
 }
 
-.balance-display .payout-display{
-    text-align: right;
+.balance-display, .payout-display{
+    display:flex;
+    flex-direction: row;
 }
 
 .bet-interface-interactables {

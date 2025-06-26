@@ -354,5 +354,4 @@ playButton.addEventListener('click', () => {
 
 /* Page Initialization */
 displayTumblers();
-displayScore(balance);
 displayBet(bet);
