@@ -106,7 +106,7 @@ let bet = 25;
 function displayTumblers() {
     for (let i = 0; i < 5; i++) {
         let tumbler = document.querySelector(`#tumbler-${i}`);
-        let imagePath = `url('./assets/${tumblerValues[i].getItemName()}.png')`
+        let imagePath = `url('./assets/symbols/${tumblerValues[i].getItemName()}.png')`
         tumbler.style.backgroundImage = imagePath;
         tumbler.textContent = '';
     }
@@ -120,8 +120,47 @@ function displayBet(bet) {
 };
 
 function displayScore(balance) {
-    let currentBalance = document.querySelector('.balance-display');
-    currentBalance.textContent = ('000000000' + balance).slice(-9);
+    let imagePath = 'url(\'./assets/seven-seg/null.png\')'
+    let currentBalance = ('000000000' + balance).slice(-9);
+    console.log('currentBalance: ' + currentBalance);
+    for (let i = 0; i < 9; i++) {
+        let segement = document.querySelector(`#score-segment-${i}`)
+        let digit = currentBalance[i];
+        console.log('digit: ' + digit);
+        switch (digit) {
+            case 0:
+                imagePath = 'url(\'./assets/seven-seg/zero.png\')';
+                break;
+            case 1:
+                imagePath = 'url(\'./assets/seven-seg/one.png\')';
+                break;
+            case 2:
+                imagePath = 'url(\'./assets/seven-seg/two.png\')';
+                break;
+            case 3:
+                imagePath = 'url(\'./assets/seven-seg/three.png\')';
+                break;
+            case 4:
+                imagePath = 'url(\'./assets/seven-seg/four.png\')';
+                break;
+            case 5:
+                imagePath = 'url(\'./assets/seven-seg/five.png\')';
+                break;
+            case 6:
+                imagePath = 'url(\'./assets/seven-seg/six.png\')';
+                break;
+            case 7:
+                imagePath = 'url(\'./assets/seven-seg/seven.png\')';
+                break;
+            case 8:
+                imagePath = 'url(\'./assets/seven-seg/eight.png\')';
+                break;
+            case 9:
+                imagePath = 'url(\'./assets/seven-seg/nine.png\')';
+                break;
+        };
+        segement.style.backgroundImage = imagePath;
+    };
     return;
 };
 
@@ -327,7 +366,6 @@ function scoreTumblers(bet) {
         count = maxCategoryCount;
         type = 'category';
     };
-    console.log(`Score Tumble Debug:\nID:${ID} count:${count} type:${type}`);
     return bet * getCountMultiplier(count, type) * getIDMultiplier(ID, type);
 };
 
@@ -354,4 +392,5 @@ playButton.addEventListener('click', () => {
 
 /* Page Initialization */
 displayTumblers();
+displayScore(balance);
 displayBet(bet);
